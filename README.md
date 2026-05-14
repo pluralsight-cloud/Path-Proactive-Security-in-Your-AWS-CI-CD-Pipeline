@@ -37,22 +37,25 @@ Hands-on course where learners build and validate a governance stage inside Code
 
 ## How It All Fits Together
 
-Course 1 establishes the mental model: governance belongs in the pipeline, and security checks should behave like tests. 
+Course 1 establishes the mental model: governance belongs in the pipeline, and security checks should behave like tests.
 
 Course 2 makes that concrete — learners progressively build a governance stage, layer in validation tools, and prove the pattern works in both pass and fail scenarios. The challenge lab reinforces depth over breadth by extending the same pattern with one more control.
 
 ## Repository Layout
 
 ```
-├── course-1/                  # Conceptual course assets (slides, scripts)
-├── course-2/
-│   ├── module-1/
-│   │   ├── lab-governance-stage/
-│   │   ├── lab-cfn-lint/
-│   │   ├── lab-access-analyzer/
-│   │   ├── lab-compliant-deploy/
-│   │   └── lab-noncompliant-deploy/
-│   └── module-2/
-│       └── challenge-lab/
-└── shared/                    # Common templates, buildspec files, pipeline config
+├── 1-course-shifting-left-in-aws-ci-cd/                                   # Course 1 assets
+├── 2-course-implement-governance-patterns-in-an-aws-ci-cd-pipeline/       # Course 2 assets
+├── 3-lab-inserting-a-governance-validation-stage-into-an-aws-pipeline/
+│   ├── configuration/
+│   │   └── buildspec.yml
+│   ├── infra/
+│   │   └── template.yml
+│   └── README.md
+├── 4-lab-using-static-analysis-to-detect-cloudformation-misconfigurations/ # Lab assets
+├── 5-lab-validating-iam-policies-as-automated-unit-tests/                  # Lab assets
+├── 6-lab-running-a-compliant-governance-check-in-an-aws-pipeline/          # Lab assets
+├── 7-lab-failing-a-risky-deployment-through-governance-controls/           # Lab assets
+├── 8-extending-an-aws-governance-pipeline-with-a-new-control/              # Challenge lab assets
+└── README.md
 ```
