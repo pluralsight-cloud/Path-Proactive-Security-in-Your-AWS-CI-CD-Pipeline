@@ -4,13 +4,33 @@ phases:
     runtime-versions:
       python: 3.13
     commands:
-      - pip install --quiet cfn-lint pyyaml boto3
+      - <INSTALL CFN-LINT, PYYAML, AND BOTO3 HERE USING PIP>
   build:
     commands:
-      - echo "[1/2] Checking cfn-lint version..."
-      - cfn-lint --version
-      - echo "[2/2] Running cfn-lint against all templates..."
-      - cfn-lint infra/**/*.yml
+      - <CHECK CFN-LINT VERSION HERE>
+      - <RUN CFN-LINT AGAINST ALL YML TEMPLATES IN INFRA DIRECTORY HERE>
 artifacts:
   files:
     - "**/*"
+
+# ------------------------------------------------------------------------------------
+# WARNING: SPOLIER TEMPLATE IS BELOW
+# Correct buildspec.yml file for reference is below.
+# You should try your best to create your own version before referencing this.
+# ------------------------------------------------------------------------------------
+# version: 0.2
+# phases:
+#   install:
+#     runtime-versions:
+#       python: 3.13
+#     commands:
+#       - pip install --quiet cfn-lint pyyaml boto3
+#   build:
+#     commands:
+#       - echo "[1/2] Checking cfn-lint version..."
+#       - cfn-lint --version
+#       - echo "[2/2] Running cfn-lint against all templates..."
+#       - cfn-lint infra/**/*.yml
+# artifacts:
+#   files:
+#     - "**/*"
