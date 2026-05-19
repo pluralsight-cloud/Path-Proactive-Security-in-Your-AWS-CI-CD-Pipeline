@@ -54,17 +54,17 @@ The hands-on labs reinforce depth over breadth by extending the same pattern wit
 Each lab builds on the previous lab throughout this path.
 
 ```text
-                                        ___________________________________________________________
-                                       /     Shifting Left in AWS CI/CD Pipelines Accomplished     \
-                                      /-------------------------------------------------------------\
-                                     /  Lab: Failing a Risky Deployment Through Governance Controls  \
-                                    /-----------------------------------------------------------------\
-                                   /    Lab: Running a Compliant Governance Check in an AWS Pipeline   \
-                                  /---------------------------------------------------------------------\
-                                 /        Lab: Validating IAM Policies as Automated Unit Tests           \
-                                /-------------------------------------------------------------------------\
-                               /   Lab: Using Static Analysis to Detect CloudFormation Misconfigurations   \
-                              /-----------------------------------------------------------------------------\
-                             /      Lab: Inserting a Governance Validation Stage into an AWS Pipeline        \
-                            /---------------------------------------------------------------------------------\
+            ___________________________________________________________
+           /     Shifting Left in AWS CI/CD Pipelines Accomplished     \
+          /-------------------------------------------------------------\
+         /  Lab: Failing a Risky Deployment Through Governance Controls  \
+        /-----------------------------------------------------------------\
+       /    Lab: Running a Compliant Governance Check in an AWS Pipeline   \
+      /---------------------------------------------------------------------\
+     /        Lab: Validating IAM Policies as Automated Unit Tests           \
+    /-------------------------------------------------------------------------\
+   /   Lab: Using Static Analysis to Detect CloudFormation Misconfigurations   \
+  /-----------------------------------------------------------------------------\
+ /      Lab: Inserting a Governance Validation Stage into an AWS Pipeline        \
+/---------------------------------------------------------------------------------\
 ```
