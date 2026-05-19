@@ -19,7 +19,7 @@ You will configure buildspec commands in a `buildspec.yml` file to run static an
 
 - `README.md`: Lab instructions and command reference.
 - `configuration/buildspec.yml`: CodeBuild steps for cfn-lint static analysis.
-- `infra/template.yml`: Infrastructure template validated during governance checks.
+- `infra/template.yml`: Infrastructure template validated during governance checks. You will need to check this.
 
 ## Before You Begin Important
 
