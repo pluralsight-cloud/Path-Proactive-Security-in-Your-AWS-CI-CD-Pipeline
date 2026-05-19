@@ -43,6 +43,8 @@ Course 2 makes that concrete — learners progressively build a governance stage
 
 ## Repository Layout
 
+| **Each directory maps to either an individual course or a hands-on lab.**
+
 ```
 ├── 1-course-shifting-left-in-aws-ci-cd/                                   # Course 1 assets
 ├── 2-course-implement-governance-patterns-in-an-aws-ci-cd-pipeline/       # Course 2 assets
