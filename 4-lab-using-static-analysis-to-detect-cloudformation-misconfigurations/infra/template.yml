@@ -40,6 +40,7 @@ Resources:
   # NEW RESOURCE
   # This role will be used moving forward throughout the rest of the labs in this path.
   # You can uncomment this role or create your own.
+  # If you uncomment this role, make sure that the spacing and formatting is correct.
   # ------------------------------------------------------------------------------------
 
   # NewRole:
