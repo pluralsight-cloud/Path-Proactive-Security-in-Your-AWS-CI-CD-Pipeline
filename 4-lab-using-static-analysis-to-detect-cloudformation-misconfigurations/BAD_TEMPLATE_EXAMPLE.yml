@@ -25,7 +25,7 @@ Resources:
         Fn::ImportValue:
           Fn::Sub: "${AWS::AccountId}-${AWS::Region}-VpcId"
       SecurityGroupIngress:
-        - IpProtocol: tcp
+        - IpProtocol: transmission-control-protocol # THIS WILL CAUSE THE TEMPLATE LINTING TO FAIL
           FromPort: 443
           ToPort: 443
           CidrIp: 0.0.0.0/0
@@ -35,9 +35,5 @@ Resources:
           Value: !Sub "${Environment}"
         - Key: Application
           Value: !Sub "${AppName}"
-
-  # ------------------------------
-  # ADD RESOURCE BELOW FOR TESTING
-  # ------------------------------
 
 Outputs: {}
