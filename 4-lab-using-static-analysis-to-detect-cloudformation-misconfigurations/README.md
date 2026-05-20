@@ -7,8 +7,9 @@ You will configure buildspec commands in a `buildspec.yml` file to run static an
 ## Directory Tree
 
 ```text
-4-lab-using-static-analysis-to-detect-cloudformation-misconfigurations
+4-lab-using-static-analysis-to-detect-cloudformation-misconfigurations/
 ├── README.md
+├── BAD_TEMPLATE_EXAMPLE.yml
 ├── configuration/
 │   └── buildspec.yml
 └── infra/
@@ -18,23 +19,10 @@ You will configure buildspec commands in a `buildspec.yml` file to run static an
 ### File Notes
 
 - `README.md`: Lab instructions and command reference.
-- `configuration/buildspec.yml`: CodeBuild steps for cfn-lint static analysis.
-- `infra/template.yml`: Infrastructure template validated during governance checks. You will need to check this.
+- `BAD_TEMPLATE_EXAMPLE.yml`: A misconfigured template to locally validate *cfn-lint* against a file with bad syntax.
+- `configuration/buildspec.yml`: CodeBuild commands used by the governance stage. Adds in *cfn-lint* to the CI/CD flow.
+- `infra/template.yml`: Sample infrastructure template for deployment flow. Contains template syntax for sample resources
 
 ## Before You Begin Important
 
 **You must manually upload `artifacts.zip` to the S3 bucket in order for the pipeline to succeed.**
-
----
-
-### Bash Commands
-
-Commands used within the lab for easy reference.
-
-#### Zip required files for pipeline change
-
-Ensure you are in the root directory of the lab and then execute the command below to recursively zip all of the required files into the artifacts zip file.
-
-```shell
-zip -r artifacts.zip infra configuration
-```

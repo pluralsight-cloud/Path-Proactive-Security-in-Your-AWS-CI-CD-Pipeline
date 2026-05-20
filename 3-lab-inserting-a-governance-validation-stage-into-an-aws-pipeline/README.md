@@ -32,15 +32,3 @@ These governance patterns let teams **shift security left**, embedding automated
 ## Before You Begin Important
 
 **You must manually upload `artifacts.zip` to the S3 bucket in order for the pipeline to succeed.**
-
----
-
-### Bash Commands
-
-Commands used within the lab for easy reference.
-
-#### Zip required files for pipeline change
-
-```shell
-zip -r artifacts.zip infra configuration
-```
