@@ -10,6 +10,7 @@ You will configure buildspec commands in a `buildspec.yml` file to run static an
 4-lab-using-static-analysis-to-detect-cloudformation-misconfigurations/
 ├── README.md
 ├── BAD_TEMPLATE_EXAMPLE.yml
+├── requirements.txt
 ├── configuration/
 │   └── buildspec.yml
 └── infra/
@@ -20,6 +21,7 @@ You will configure buildspec commands in a `buildspec.yml` file to run static an
 
 - `README.md`: Lab instructions and command reference.
 - `BAD_TEMPLATE_EXAMPLE.yml`: A misconfigured template to locally validate *cfn-lint* against a file with bad syntax.
+- `requirements.txt`: Required Python packages for cfn-lint to function work.
 - `configuration/buildspec.yml`: CodeBuild commands used by the governance stage. Adds in *cfn-lint* to the CI/CD flow.
 - `infra/template.yml`: Sample infrastructure template for deployment flow. Contains template syntax for sample resources
 
