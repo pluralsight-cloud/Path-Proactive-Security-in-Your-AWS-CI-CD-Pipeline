@@ -7,7 +7,7 @@ You will configure buildspec commands in a `buildspec.yml` file to run static an
 ## Directory Tree
 
 ```text
-2-Using Static Analysis to Detect CloudFormation Misconfigurations/
+4-lab-using-static-analysis-to-detect-cloudformation-misconfigurations
 ├── README.md
 ├── configuration/
 │   └── buildspec.yml
