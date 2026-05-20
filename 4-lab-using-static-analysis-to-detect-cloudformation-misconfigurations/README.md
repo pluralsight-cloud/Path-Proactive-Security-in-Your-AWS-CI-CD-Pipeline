@@ -25,6 +25,6 @@ You will configure buildspec commands in a `buildspec.yml` file to run static an
 - `configuration/buildspec.yml`: CodeBuild commands used by the governance stage. Adds in *cfn-lint* to the CI/CD flow.
 - `infra/template.yml`: Sample infrastructure template for deployment flow. Contains template syntax for sample resources
 
-## Before You Begin Important
+## Important
 
 **You must manually upload `artifacts.zip` to the S3 bucket in order for the pipeline to succeed.**
