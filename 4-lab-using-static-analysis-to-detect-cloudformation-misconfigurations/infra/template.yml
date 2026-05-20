@@ -36,8 +36,35 @@ Resources:
         - Key: Application
           Value: !Sub "${AppName}"
 
-  # ------------------------------
-  # ADD RESOURCE BELOW FOR TESTING
-  # ------------------------------
+  # ------------------------------------------------------------------------------------
+  # NEW RESOURCE
+  # This role will be used moving forward throughout the rest of the labs in this path.
+  # You can uncomment this role or create your own.
+  # ------------------------------------------------------------------------------------
+
+  # NewRole:
+  #   Type: AWS::IAM::Role
+  #   Properties:
+  #     RoleName: governance-lab-test-role
+  #     AssumeRolePolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Effect: Allow
+  #           Principal:
+  #             Service: ec2.amazonaws.com
+  #           Action: sts:AssumeRole
+  #     Policies:
+  #       - PolicyName: compliant-s3-limited-access
+  #         PolicyDocument:
+  #           Version: "2012-10-17"
+  #           Statement:
+  #             - Effect: Allow
+  #               Action:
+  #                 - s3:GetObject
+  #                 - s3:ListBucket
+  #                 - s3:PutObject
+  #               Resource:
+  #                 - !Sub "arn:aws:s3:::governance-lab-artifacts-${AWS::AccountId}-${AWS::Region}-an/*"
+  #                 - !Sub "arn:aws:s3:::governance-lab-artifacts-${AWS::AccountId}-${AWS::Region}-an"
 
 Outputs: {}
