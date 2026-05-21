@@ -8,7 +8,7 @@ phases:
   build:
     commands:
       - <CHECK CFN-LINT VERSION HERE>
-      - <RUN CFN-LINT AGAINST ALL YML TEMPLATES IN INFRA DIRECTORY HERE>
+      - <RUN CFN-LINT AGAINST ALL YML TEMPLATES (infra/**/*.yml) IN INFRA DIRECTORY HERE>
 artifacts:
   files:
     - "**/*"
