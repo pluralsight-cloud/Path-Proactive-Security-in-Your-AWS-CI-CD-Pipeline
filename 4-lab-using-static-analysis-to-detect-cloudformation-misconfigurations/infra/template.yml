@@ -68,4 +68,9 @@ Resources:
   #                 - !Sub "arn:aws:s3:::governance-lab-artifacts-${AWS::AccountId}-${AWS::Region}-an/*"
   #                 - !Sub "arn:aws:s3:::governance-lab-artifacts-${AWS::AccountId}-${AWS::Region}-an"
 
-Outputs: {}
+Outputs:
+  SecurityGroupId:
+    Description: ID of the application security group
+    Value: !GetAtt AppSecurityGroup.GroupId
+    Export:
+      Name: !Sub "${AppName}-sg-id"
