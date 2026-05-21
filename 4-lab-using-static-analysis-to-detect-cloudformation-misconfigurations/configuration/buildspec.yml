@@ -30,7 +30,7 @@ artifacts:
 #       - echo "[1/2] Checking cfn-lint version..."
 #       - cfn-lint --version
 #       - echo "[2/2] Running cfn-lint against all templates..."
-#       - cfn-lint infra/**/*.yml
+#       - cfn-lint -f pretty infra/**/*.yml
 # artifacts:
 #   files:
 #     - "**/*"
