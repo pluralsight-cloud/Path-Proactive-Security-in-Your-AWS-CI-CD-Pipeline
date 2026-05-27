@@ -7,7 +7,7 @@ This lab focuses on ensuring that any proposed CloudFormation templates containi
 ## Directory Tree
 
 ```text
-3-Validating IAM Policies as Automated Unit Tests/
+5-lab-validating-iam-policies-as-automated-unit-tests/
 ├── README.md
 ├── cfn-guard/
 │   └── iam-no-s3-wildcard.guard
@@ -32,14 +32,12 @@ This lab focuses on ensuring that any proposed CloudFormation templates containi
 
 ---
 
-### Bash Commands
+## Miscellaneous Resources
 
-Commands used within the lab for easy reference.
+### AWS CloudFormation Guard - Documentation
 
-#### Zip required files for pipeline change
+<https://docs.aws.amazon.com/cfn-guard/latest/ug/what-is-guard.html>
 
-Ensure you are in the root directory of the lab and then execute the command below.
+### AWS CloudFormation Guard - GitHub
 
-```shell
-zip -r artifacts.zip infra configuration cfn-guard
-```
+<https://github.com/aws-cloudformation/cloudformation-guard>
