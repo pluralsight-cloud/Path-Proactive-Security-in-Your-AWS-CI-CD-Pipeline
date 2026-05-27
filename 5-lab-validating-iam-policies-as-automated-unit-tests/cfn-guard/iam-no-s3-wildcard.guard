@@ -1,0 +1,32 @@
+let managed_policies = Resources.*[ Type == "AWS::IAM::ManagedPolicy" ]
+let iam_policies = Resources.*[ Type == "AWS::IAM::Policy" ]
+let iam_roles = Resources.*[ Type == "AWS::IAM::Role" ]
+
+rule iam_managed_policy_disallow_s3_wildcard when %managed_policies !empty {
+  %managed_policies {
+    Properties.PolicyDocument.Statement[*] {
+      Action != "s3:*"
+      Action[*] != "s3:*"
+    }
+  }
+}
+
+rule iam_policy_disallow_s3_wildcard when %iam_policies !empty {
+  %iam_policies {
+    Properties.PolicyDocument.Statement[*] {
+      Action != "s3:*"
+      Action[*] != "s3:*"
+    }
+  }
+}
+
+rule iam_role_inline_policy_disallow_s3_wildcard when %iam_roles !empty {
+  %iam_roles {
+    when Properties.Policies exists {
+      Properties.Policies[*].PolicyDocument.Statement[*] {
+        Action != "s3:*"
+        Action[*] != "s3:*"
+      }
+    }
+  }
+}

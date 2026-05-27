@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: The third CloudFormation template, where we start validating IAM policies, mimicking automated unit tests.
+
+Parameters:
+  AppName:
+    Type: String
+    Default: governance-lab-app
+    Description: Application name used for resource naming and tagging
+
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, staging, prod]
+    Description: Deployment environment tag
+
+Resources:
+  # ----------------------------------------------------------
+  # Security group — Allows HTTP access from the internet only
+  # ----------------------------------------------------------
+  AppSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Application security group for governance lab
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: "${AWS::AccountId}-${AWS::Region}-VpcId"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+          Description: Allow HTTPS from internet
+      Tags:
+        - Key: Environment
+          Value: !Sub "${Environment}"
+        - Key: Application
+          Value: !Sub "${AppName}"
+
+  # --------------------------------------------
+  # New IAM role carried over from previous lab.
+  # --------------------------------------------
+  NewRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: governance-lab-test-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: compliant-s3-limited-access
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                  - s3:PutObject
+                Resource:
+                  - !Sub "arn:aws:s3:::governance-lab-artifacts-${AWS::AccountId}-${AWS::Region}-an/*"
+                  - !Sub "arn:aws:s3:::governance-lab-artifacts-${AWS::AccountId}-${AWS::Region}-an"
+
+Outputs:
+  SecurityGroupId:
+    Description: ID of the application security group
+    Value: !GetAtt AppSecurityGroup.GroupId
+    Export:
+      Name: !Sub "${AppName}-sg-id"
