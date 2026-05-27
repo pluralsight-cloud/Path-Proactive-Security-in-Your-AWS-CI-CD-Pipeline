@@ -26,9 +26,9 @@ This lab focuses on ensuring that any proposed CloudFormation templates containi
 - `configuration/buildspec-guard.yml`: CodeBuild commands for CloudFormation Guard validation.
 - `infra/template.yml`: Sample infrastructure template validated by the pipeline.
 
-## Before You Begin Important
+### Important
 
-**You must upload `artifacts.zip` to the S3 bucket in order for the pipeline to succeed.**
+**You must upload `artifacts.zip` to the S3 bucket in order for the pipeline to execute.**
 
 ---
 
