@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "[1/3] Installing prerequisites for CloudFormation Guard..."
+      - curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/aws-cloudformation/cloudformation-guard/main/install-guard.sh | sh
+  pre_build:
+    commands:
+      - echo "[2/3] Confirming cfn-guard is installed..."
+      - export PATH=~/.guard/bin:$PATH
+      - cfn-guard --version
+  build:
+    commands:
+      - echo "[3/3] Validating IAM policies in infra/template.yml..."
+      - export PATH=~/.guard/bin:$PATH
+      - cfn-guard validate --rules cfn-guard/governance-rules.guard --data infra/template.yml
+
+artifacts:
+  files:
+    - "**/*"
