@@ -415,8 +415,6 @@ Resources:
       InstanceType: t3.small
       # Remove comment below to reference the parameter for the latest AMI from AML
       ImageId: !Ref LatestAmiId
-      # Pluralsight managed AML2023
-      # ImageId: %ami-259%
       SubnetId: !Ref PublicSubnet2
       SecurityGroupIds:
         - !Ref ApplicationServerSecurityGroup
