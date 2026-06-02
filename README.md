@@ -32,21 +32,52 @@ The hands-on labs reinforce depth over breadth by extending the same pattern wit
 
 ### Repository Layout
 
-```
-├── 1-course-shifting-left-in-aws-ci-cd/                                   # Course 1 assets
-├── 2-course-implement-governance-patterns-in-an-aws-ci-cd-pipeline/       # Course 2 assets
+```text
+├── .gitignore
+├── .pre-commit-config.yaml
 ├── 3-lab-inserting-a-governance-validation-stage-into-an-aws-pipeline/
 │   ├── configuration/
 │   │   └── buildspec.yml
 │   ├── infra/
 │   │   └── template.yml
 │   └── README.md
-├── 4-lab-using-static-analysis-to-detect-cloudformation-misconfigurations/ # Lab assets
-├── 5-lab-validating-iam-policies-as-automated-unit-tests/                  # Lab assets
-├── 6-lab-running-a-compliant-governance-check-in-an-aws-pipeline/          # Lab assets
-├── 7-lab-failing-a-risky-deployment-through-governance-controls/           # Lab assets
-├── 8-extending-an-aws-governance-pipeline-with-a-new-control/              # Challenge lab assets
-└── README.md
+├── 4-lab-using-static-analysis-to-detect-cloudformation-misconfigurations/
+│   ├── BAD_TEMPLATE_EXAMPLE.yml
+│   ├── configuration/
+│   │   └── buildspec.yml
+│   ├── infra/
+│   │   └── template.yml
+│   ├── README.md
+│   └── requirements.txt
+├── 5-lab-validating-iam-policies-as-automated-unit-tests/
+│   ├── cfn-guard/
+│   │   └── iam-no-s3-wildcard.guard
+│   ├── configuration/
+│   │   ├── buildspec-guard.yml
+│   │   └── buildspec.yml
+│   ├── infra/
+│   │   └── template.yml
+│   └── README.md
+├── 6-lab-running-a-compliant-governance-check-in-an-aws-pipeline/
+│   ├── cfn-guard/
+│   │   ├── README.md
+│   │   ├── iam-no-admin-access-policy.guard
+│   │   ├── iam-no-wildcard-resources.guard
+│   │   ├── s3-no-public-access-guard
+│   │   ├── s3-no-wildcard-actions.guard
+│   │   ├── s3-no-wildcard-principals.guard
+│   │   ├── s3-server-side-encryption-enabled.guard
+│   │   ├── security-group-no-allow-all-protocols.guard
+│   │   ├── security-group-no-descriptions.guard
+│   │   └── security-group-no-unrestricted-ssh.guard
+│   ├── configuration/
+│   │   ├── buildspec-guard.yml
+│   │   └── buildspec.yml
+│   ├── infra/
+│   │   └── template.yml
+│   └── README.md
+├── README.md
+└── requirements.txt
 ```
 
 ## Lab Progression Pyramid
