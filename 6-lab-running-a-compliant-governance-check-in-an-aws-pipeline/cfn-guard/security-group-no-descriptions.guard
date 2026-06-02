@@ -74,8 +74,5 @@ rule SECURITY_GROUP_DESCRIPTION_RULE when %security_group_description_rule_sg_re
   %violation_sge empty
   %violation_sgi empty
 
-  <<
-    Violation: Security Group or Security Group Egress or Security Group Ingress resources do not have description.
-    Fix: Specify the description for Security Group and Security Group Egress and Security Group Ingress resources.
-  >>
+  <<Violation: Security Group or Security Group Egress or Security Group Ingress resources must have description.>>
 }

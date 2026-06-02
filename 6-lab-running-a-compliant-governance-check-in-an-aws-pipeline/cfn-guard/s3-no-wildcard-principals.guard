@@ -40,8 +40,5 @@ rule S3_BUCKET_POLICY_NO_WILDCARD_PRINCIPAL when %s3_bucket_policy_no_wildcard_p
     }
   ]
   %violations empty
-  <<
-    Violation: S3 Bucket policy should not allow * principal
-    Fix: Specify explicit principals in the S3 BucketPolicy
-  >>
+  <<S3 Bucket policy should not allow * principal. Specify explicit principals in the S3 BucketPolicy>>
 }

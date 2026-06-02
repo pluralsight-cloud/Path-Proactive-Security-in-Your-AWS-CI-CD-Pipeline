@@ -57,9 +57,8 @@ rule SECURITY_GROUP_INGRESS_ALL_PROTOCOLS_RULE when %security_group_ingress_all_
   ]
 
   %violations_sg empty
+  <<Violation: Security Group Ingress has a IpProtocol value of -1. Update IpProtocol value of -1 as tcp, udp, icmp, or icmpv6 or something else.>>
+
   %violations_sgi empty
-  <<
-    Violation: Security Group Ingress has a IpProtocol value of -1 and
-    Fix: Update IpProtocol value of -1 as tcp, udp, icmp, or icmpv6 or something else.
-  >>
+  <<Violation: Security Group Ingress has a IpProtocol value of -1. Update IpProtocol value of -1 as tcp, udp, icmp, or icmpv6 or something else.>>
 }

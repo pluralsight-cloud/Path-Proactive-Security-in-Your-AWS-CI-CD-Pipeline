@@ -33,8 +33,6 @@ rule S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED when %s3_buckets_level_public_acce
   %s3_buckets_level_public_access_prohibited.Properties.PublicAccessBlockConfiguration.BlockPublicPolicy == true
   %s3_buckets_level_public_access_prohibited.Properties.PublicAccessBlockConfiguration.IgnorePublicAcls == true
   %s3_buckets_level_public_access_prohibited.Properties.PublicAccessBlockConfiguration.RestrictPublicBuckets == true
-  <<
-    Violation: S3 Bucket Public Access controls need to be restricted.
-    Fix: Set S3 Bucket PublicAccessBlockConfiguration properties for BlockPublicAcls, BlockPublicPolicy, IgnorePublicAcls, RestrictPublicBuckets parameters to true.
-  >>
+
+  <<S3 Bucket Public Access controls need to be restricted. Set S3 Bucket PublicAccessBlockConfiguration properties for BlockPublicAcls, BlockPublicPolicy, IgnorePublicAcls, RestrictPublicBuckets parameters to true.>>
 }

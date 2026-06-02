@@ -56,9 +56,8 @@ rule UNRESTRICTED_INCOMING_SSH_DISABLED when %aws_security_groups_restricted_ssh
   ]
 
   %violations_sg empty
+  <<Security Group Ingress rules must not allow unrestricted SSH access (port 22) from 0.0.0.0/0 or ::/0. Please specify a more specific CIDR.>>
+
   %violations_sgi empty
-  <<
-    Violation: Security Group Ingress rules must not allow unrestricted SSH access (port 22) from 0.0.0.0/0 or ::/0.
-    Fix: Set the SSH ingress CidrIp/CidrIpv6 to a more restrictive range (Example: 10.0.0.0/16).
-  >>
+  <<Security Group Ingress rules must not allow unrestricted SSH access (port 22) from 0.0.0.0/0 or ::/0. Please specify a more specific CIDR.>>
 }
