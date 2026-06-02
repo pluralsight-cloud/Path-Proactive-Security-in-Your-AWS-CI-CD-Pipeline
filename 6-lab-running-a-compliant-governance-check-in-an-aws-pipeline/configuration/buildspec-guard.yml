@@ -12,9 +12,9 @@ phases:
       - cfn-guard --version
   build:
     commands:
-      - echo "[3/3] Validating IAM policies in infra/template.yml..."
+      - echo "[3/3] Validating all templates within the infra directory..."
       - export PATH=~/.guard/bin:$PATH
-      - cfn-guard validate --rules cfn-guard/governance-rules.guard --data infra/template.yml
+      - cfn-guard validate --rules cfn-guard --data infra
 
 artifacts:
   files:
