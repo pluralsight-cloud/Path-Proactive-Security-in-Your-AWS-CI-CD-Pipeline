@@ -33,7 +33,7 @@ let aws_security_groups_restricted_ssh_sgi_resources = Resources.*[ Type == 'AWS
   Metadata.guard.SuppressedRules.* != "INCOMING_SSH_DISABLED"
 ]
 
-rule INCOMING_SSH_DISABLED when %aws_security_groups_restricted_ssh_sg_resources !empty OR %aws_security_groups_restricted_ssh_sgi_resources !empty {
+rule UNRESTRICTED_INCOMING_SSH_DISABLED when %aws_security_groups_restricted_ssh_sg_resources !empty OR %aws_security_groups_restricted_ssh_sgi_resources !empty {
   let violations_sg = %aws_security_groups_restricted_ssh_sg_resources[
     Type == 'AWS::EC2::SecurityGroup'
     Properties.SecurityGroupIngress exists
