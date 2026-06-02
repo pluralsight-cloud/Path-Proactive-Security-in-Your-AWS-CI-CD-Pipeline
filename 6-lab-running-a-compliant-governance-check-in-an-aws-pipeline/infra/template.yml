@@ -401,13 +401,14 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: TemplateApplicationServerSecurityGroup
-      GroupDescription: Security group for application servers allowing HTTP access
+      GroupDescription: Security group for application servers allowing SSH access
       VpcId: !Ref VPC
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
+          FromPort: 22
+          ToPort: 22
           CidrIp: 0.0.0.0/0
+          Description: Allow SSH from internet
 
   WebServer:
     Type: AWS::EC2::Instance

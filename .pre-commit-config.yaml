@@ -1,0 +1,19 @@
+exclude: ^(buildspec.yml|.pre-commit-config.yaml)$
+fail_fast: true
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+  - repo: https://github.com/ambv/black
+    rev: stable
+    hooks:
+      - id: black
+        language_version: python3.14.4
+  - repo: https://github.com/aws-cloudformation/cfn-lint
+    rev: v1.51.2 # Use the latest stable version tag
+    hooks:
+      - id: cfn-python-lint
+        files: (^|/)infra/.*\.yml$ # Matches .yml files in any infra/ directory at any depth
+

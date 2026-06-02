@@ -1,5 +1,11 @@
 # CloudFormation Guard Governance Rules
 
+**WARNING** - This document explains all of the rules defined within the cfn-guard file. If you want to explore them and try to figure them out yourself, it is recommended you do not read this right away.
+
+---
+
+## Directory explanation
+
 This directory contains the policy-as-code rules that the governance pipeline runs
 against CloudFormation templates **before** they are deployed. All rules live in a
 single file, [`governance-rules.guard`](./governance-rules.guard), written in the
