@@ -8,14 +8,14 @@ At the end of it all, learners will challenge themselves by adding their own com
 
 | Name | Type | Duration (*Estimated*) | Description |
 |-------|------|----------|-------------|
-| Shifting Left in AWS CI/CD | Clip | 15 min | Explores the necessity of embedding governance controls into your delivery pipelines. |
-| Implement Governance Patterns in an AWS CI/CD Pipeline | Clip | 15 min | Guides you through the practical steps of embedding automated security checks into your deployment process. |
-| Inserting a Governance Validation Stage into an AWS Pipeline | Lab | 15 min | Insert a governance stage into an existing CodePipeline backed by a CodeBuild validation project. |
-| Using Static Analysis to Detect CloudFormation Misconfigurations | Lab | 15 min | Integrate *cfn-lint* to catch CloudFormation template issues before deployment. |
-| Validating IAM Policies as Automated Unit Tests | Lab | 15 min | Validate IAM policies in the pipeline and fail on overly permissive configurations using *cfn-guard*. |
-| Running a Compliant Governance Check in an AWS Pipeline | Lab | 15 min | Reading pass/fail signals in build logs; reframing failures as successful safeguards. |
-| Failing a Risky Deployment Through Governance Controls | Lab | 15 min | Push a clean resource change and confirm end-to-end pipeline success. |
-| Extending an AWS Governance Pipeline with a New Control | Graded Lab | 30 min | Requires learners to apply the repeatable governance pattern they built by implementing an additional automated control into the existing validation stage. |
+| Shifting Left in AWS CI/CD | Clip | 30 min | Explores the necessity of embedding governance controls into your delivery pipelines. |
+| Implement Governance Patterns in an AWS CI/CD Pipeline | Clip | 30 min | Guides you through the practical steps of embedding automated security checks into your deployment process. |
+| Inserting a Governance Validation Stage into an AWS Pipeline | Lab | 30 min | Insert a governance stage into an existing CodePipeline backed by a CodeBuild validation project. |
+| Using Static Analysis to Detect CloudFormation Misconfigurations | Lab | 30 min | Integrate *cfn-lint* to catch CloudFormation template issues before deployment. |
+| Validating IAM Policies as Automated Unit Tests | Lab | 30 min | Validate IAM policies in the pipeline and fail on overly permissive configurations using *cfn-guard*. |
+| Running a Compliant Governance Check in an AWS Pipeline | Lab | 30 min | Reading pass/fail signals in build logs; reframing failures as successful safeguards. |
+| Failing a Risky Deployment Through Governance Controls | Lab | 30 min | Push a clean resource change and confirm end-to-end pipeline success. |
+| Extending an AWS Governance Pipeline with a New Control | Graded Lab | 60 min | Requires learners to apply the repeatable governance pattern they built by implementing an additional automated control into the existing validation stage. |
 
 ## How It All Fits Together
 
