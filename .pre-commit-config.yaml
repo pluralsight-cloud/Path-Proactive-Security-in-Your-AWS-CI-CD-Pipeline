@@ -16,4 +16,4 @@ repos:
     hooks:
       - id: cfn-python-lint
         files: (^|/)infra/.*\.yml$ # Matches .yml files in any infra/ directory at any depth
-
+        exclude: ^4-lab-using-static-analysis-to-detect-cloudformation-misconfigurations/BAD_TEMPLATE_EXAMPLE\.yml$
