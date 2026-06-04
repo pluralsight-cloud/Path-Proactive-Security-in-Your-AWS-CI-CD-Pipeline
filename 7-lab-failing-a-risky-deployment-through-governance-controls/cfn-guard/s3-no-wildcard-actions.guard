@@ -1,0 +1,80 @@
+# Rule Identifier:
+#   IAM_NO_S3_WILDCARD_ACTIONS
+#
+# Description:
+#   Checks if AWS Identity and Access Management (IAM) policies grant the full S3 Action "s3:*".
+#
+# Reports on:
+#   AWS::IAM::ManagedPolicy
+#   AWS::IAM::Policy
+#   AWS::IAM::Role
+#
+# Evaluates:
+#   AWS CloudFormation
+#
+# Rule Parameters:
+#   NA
+
+#
+# Select all IAM ManagedPolicy, Policy, and Role resources from incoming template (payload)
+#
+let managed_policies = Resources.*[ Type == "AWS::IAM::ManagedPolicy" ]
+let iam_policies = Resources.*[ Type == "AWS::IAM::Policy" ]
+let iam_roles = Resources.*[ Type == "AWS::IAM::Role" ]
+
+#
+# Reports on:
+#   AWS::IAM::ManagedPolicy
+#
+# Scenarios:
+# a) SKIP: when there are no IAM ManagedPolicy resources present
+# b) PASS: when no ManagedPolicy statement allows the s3:* action
+# c) FAIL: when any ManagedPolicy statement allows the s3:* action
+#
+rule iam_managed_policy_disallow_s3_wildcard when %managed_policies !empty {
+  %managed_policies {
+    Properties.PolicyDocument.Statement[*] {
+      Action != "s3:*"
+      Action[*] != "s3:*"
+    }
+  }
+}
+
+#
+# Reports on:
+#   AWS::IAM::Policy
+#
+# Scenarios:
+# a) SKIP: when there are no IAM Policy resources present
+# b) PASS: when no Policy statement allows the s3:* action
+# c) FAIL: when any Policy statement allows the s3:* action
+#
+rule iam_policy_disallow_s3_wildcard when %iam_policies !empty {
+  %iam_policies {
+    Properties.PolicyDocument.Statement[*] {
+      Action != "s3:*"
+      Action[*] != "s3:*"
+    }
+  }
+}
+
+#
+# Reports on:
+#   AWS::IAM::Role (inline Properties.Policies)
+#
+# Scenarios:
+# a) SKIP: when there are no IAM Role resources present
+# b) SKIP: when an IAM Role has no inline Properties.Policies defined
+# c) PASS: when no inline Role policy statement allows the s3:* action
+# d) FAIL: when any inline Role policy statement allows the s3:* action
+#
+rule iam_role_inline_policy_disallow_s3_wildcard when %iam_roles !empty {
+  %iam_roles {
+    when Properties.Policies exists {
+      Properties.Policies[*].PolicyDocument.Statement[*] {
+        Action != "s3:*"
+        Action[*] != "s3:*"
+      }
+    }
+  }
+}
