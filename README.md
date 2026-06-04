@@ -37,25 +37,32 @@ The hands-on labs reinforce depth over breadth by extending the same pattern wit
 ├── .pre-commit-config.yaml
 ├── 3-lab-inserting-a-governance-validation-stage-into-an-aws-pipeline/
 │   ├── configuration/
+│   │   ├── README.md
 │   │   └── buildspec.yml
 │   ├── infra/
+│   │   ├── README.md
 │   │   └── template.yml
 │   └── README.md
 ├── 4-lab-using-static-analysis-to-detect-cloudformation-misconfigurations/
 │   ├── BAD_TEMPLATE_EXAMPLE.yml
 │   ├── configuration/
+│   │   ├── README.md
 │   │   └── buildspec.yml
 │   ├── infra/
+│   │   ├── README.md
 │   │   └── template.yml
 │   ├── README.md
 │   └── requirements.txt
 ├── 5-lab-validating-iam-policies-as-automated-unit-tests/
 │   ├── cfn-guard/
+│   │   ├── README.md
 │   │   └── iam-no-s3-wildcard.guard
 │   ├── configuration/
+│   │   ├── README.md
 │   │   ├── buildspec-guard.yml
 │   │   └── buildspec.yml
 │   ├── infra/
+│   │   ├── README.md
 │   │   └── template.yml
 │   └── README.md
 ├── 6-lab-running-a-compliant-governance-check-in-an-aws-pipeline/
@@ -71,9 +78,35 @@ The hands-on labs reinforce depth over breadth by extending the same pattern wit
 │   │   ├── security-group-no-descriptions.guard
 │   │   └── security-group-no-unrestricted-ssh.guard
 │   ├── configuration/
+│   │   ├── README.md
 │   │   ├── buildspec-guard.yml
 │   │   └── buildspec.yml
 │   ├── infra/
+│   │   ├── README.md
+│   │   └── template.yml
+│   └── README.md
+├── 7-lab-failing-a-risky-deployment-through-governance-controls/
+│   ├── cfn-guard/
+│   │   ├── README.md
+│   │   ├── iam-no-admin-access-policy.guard
+│   │   ├── iam-no-full-access.guard
+│   │   ├── iam-no-wildcard-actions.guard
+│   │   ├── iam-no-wildcard-resources.guard
+│   │   ├── s3-bucket-versioning-enabled.guard
+│   │   ├── s3-default-encryption-kms.guard
+│   │   ├── s3-no-public-access-guard
+│   │   ├── s3-no-wildcard-actions.guard
+│   │   ├── s3-no-wildcard-principals.guard
+│   │   ├── s3-server-side-encryption-enabled-kms.guard
+│   │   ├── security-group-no-allow-all-protocols-ingress.guard
+│   │   ├── security-group-no-descriptions.guard
+│   │   └── security-group-no-unrestricted-ssh.guard
+│   ├── configuration/
+│   │   ├── README.md
+│   │   ├── buildspec-guard.yml
+│   │   └── buildspec.yml
+│   ├── infra/
+│   │   ├── README.md
 │   │   └── template.yml
 │   └── README.md
 ├── README.md
