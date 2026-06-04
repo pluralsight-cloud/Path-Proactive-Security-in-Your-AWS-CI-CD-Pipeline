@@ -47,7 +47,7 @@ validate `infra/template.yml` before deployment.
 ### `s3-server-side-encryption-enabled.guard`
 
 - **Rule identifier:** `S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED`
-- **Checks:** S3 buckets enable default encryption and use `aws:kms` or `AES256`.
+- **Checks:** S3 buckets enable default encryption and use `aws:kms`.
 - **Resources:** `AWS::S3::Bucket`
 
 ### `security-group-no-allow-all-protocols.guard`
