@@ -16,18 +16,32 @@ validate `infra/template.yml` before deployment.
   `arn:aws:iam::aws:policy/AdministratorAccess` policy.
 - **Resources:** `AWS::IAM::Role`
 
+### `iam-no-full-access.guard`
+
+- **Rule identifier:** `IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS`
+- **Checks:** IAM policy statements do not allow wildcard actions such as `*` or
+  `<service>:*` with `Effect: "Allow"`.
+- **Resources:** `AWS::IAM::Policy`
+
+### `iam-no-wildcard-actions.guard`
+
+- **Rule identifier:** `IAM_ROLE_NO_WILDCARD_ACTIONS_ON_PERMISSIONS`
+- **Checks:** IAM role inline policies do not allow wildcard actions such as `*` or
+  `<service>:*` with `Effect: "Allow"`.
+- **Resources:** `AWS::IAM::Role`
+
 ### `iam-no-wildcard-resources.guard`
 
 - **Rule identifier:** `IAM_POLICYDOCUMENT_NO_WILDCARD_RESOURCE`
-- **Checks:** IAM role/policy/managed policy statements do not allow `Resource: "*"`
-  with `Effect: "Allow"`.
+- **Checks:** IAM role/policy/managed policy statements do not allow
+  `Resource: "*"` with `Effect: "Allow"`.
 - **Resources:** `AWS::IAM::Role`, `AWS::IAM::Policy`, `AWS::IAM::ManagedPolicy`
 
-### `s3-no-public-access-guard`
+### `s3-default-encryption-kms.guard`
 
-- **Rule identifier:** `S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED`
-- **Checks:** S3 buckets define `PublicAccessBlockConfiguration` and set all four
-  public access controls to `true`.
+- **Rule identifier:** `S3_DEFAULT_ENCRYPTION_KMS`
+- **Checks:** S3 buckets configure default encryption and set the SSE algorithm to
+  `aws:kms`.
 - **Resources:** `AWS::S3::Bucket`
 
 ### `s3-no-wildcard-actions.guard`
@@ -44,16 +58,18 @@ validate `infra/template.yml` before deployment.
   in `Allow` statements.
 - **Resources:** `AWS::S3::BucketPolicy`
 
-### `s3-server-side-encryption-enabled.guard`
+### `s3-server-side-encryption-enabled-kms.guard`
 
 - **Rule identifier:** `S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED`
-- **Checks:** S3 buckets enable default encryption and use `aws:kms`.
+- **Checks:** S3 buckets enable bucket encryption and use `aws:kms` for the default
+  server-side encryption algorithm.
 - **Resources:** `AWS::S3::Bucket`
 
-### `security-group-no-allow-all-protocols.guard`
+### `security-group-no-allow-all-protocols-ingress.guard`
 
 - **Rule identifier:** `SECURITY_GROUP_INGRESS_ALL_PROTOCOLS_RULE`
-- **Checks:** Security group ingress does not use protocol `-1` (all protocols).
+- **Checks:** Security group ingress rules do not use protocol `-1`
+  (all protocols).
 - **Resources:** `AWS::EC2::SecurityGroup`, `AWS::EC2::SecurityGroupIngress`
 
 ### `security-group-no-descriptions.guard`
@@ -63,16 +79,10 @@ validate `infra/template.yml` before deployment.
 - **Resources:** `AWS::EC2::SecurityGroup`, `AWS::EC2::SecurityGroupIngress`,
   `AWS::EC2::SecurityGroupEgress`
 
-### `security-group-no-egress-open-to-anywhere.guard`
-
-- **Rule identifier:** `EC2_SECURITY_GROUP_INGRESS_OPEN_TO_WORLD_RULE`
-- **Checks:** Security group ingress does not allow `CidrIp: 0.0.0.0/0` or
-  `CidrIpv6: ::/0`.
-- **Resources:** `AWS::EC2::SecurityGroup`, `AWS::EC2::SecurityGroupIngress`
-
 ### `security-group-no-unrestricted-ssh.guard`
 
-- **Rule identifier:** `INCOMING_SSH_DISABLED`
+- **Rule implementation name:** `UNRESTRICTED_INCOMING_SSH_DISABLED`
+- **Rule identifier (metadata):** `INCOMING_SSH_DISABLED`
 - **Checks:** SSH ingress (`tcp/22`) is not open to `0.0.0.0/0` or `::/0`.
 - **Resources:** `AWS::EC2::SecurityGroup`, `AWS::EC2::SecurityGroupIngress`
 
