@@ -1,22 +1,18 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
 Description: |
-  Deploys a governance lab baseline with:
-  - A VPC, public/private subnets across 3 AZs, route tables, Internet Gateway, and NAT Gateway
+  Deploys foundational resources for a governance lab including:
+  - A single-tier VPC with public subnets across two Availability Zones
+  - Route tables and Internet Gateway (no NAT Gateway; private subnets not present in this baseline)
   - IAM role and instance profile for EC2 management
-  - Security groups and a sample EC2 web server in a public subnet
-  - An S3 bucket encrypted with a customer-managed KMS key and alias
+  - Security groups and a sample EC2 web server deployed in a public subnet
+  - An S3 bucket with customer-managed KMS encryption and alias
 
 Parameters:
   VpcName:
     Description: The name of the VPC
     Type: String
     Default: GovernanceLabVpc
-
-  # LatestAmiId:
-  #   Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
-  #   Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64
-  #   Description: The latest Amazon Linux 2 AMI ID
 
 Resources:
   VPC:
@@ -131,18 +127,40 @@ Resources:
       InternetGatewayId:
         Ref: "Igw"
 
-  ApplicationServerSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
+  HelloWorldLambdaExecutionRole:
+    Type: AWS::IAM::Role
     Properties:
-      GroupName: ApplicationServerSecurityGroup
-      GroupDescription: Security group for application servers allowing HTTPS access
-      VpcId: !Ref VPC
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
-          CidrIp: 0.0.0.0/0
-          Description: Allow HTTPS from internet
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  HelloWorldLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.12
+      Handler: index.lambda_handler
+      Role: !GetAtt HelloWorldLambdaExecutionRole.Arn
+      Timeout: 30
+      Environment:
+        Variables:
+          OUR_AWS_ACCESS_KEY_ID: <ACCESS_KEY_ID_PLACEHOLDER>
+          OUR_AWS_SECRET_ACCESS_KEY: <SECRET_ACCESS_KEY_PLACEHOLDER>
+      Code:
+        ZipFile: |
+          import json
+
+          def lambda_handler(event, context):
+              print("hello world")
+              return {
+                  "statusCode": 200,
+                  "body": json.dumps("hello world")
+              }
 
 Outputs: {}
 Metadata: {}

@@ -4,17 +4,17 @@ set -euo pipefail
 PS4=':$LINENO+'
 set -x
 
-ACCESS_KEYS_FILE="${HOME}/access-keys.txt"
-TEMPLATE_FILE="${HOME}/8-extending-an-aws-governance-pipeline-with-a-new-control/infra/template.yml"
+ACCESS_KEYS_FILE="./access-keys.txt"
+TEMPLATE_FILE="./infra/template.yml"
 
-ACCESS_KEY_PLACEHOLDER='AWS_ACCESS_KEY_ID: <ACCESS_KEY_ID_PLACEHOLDER>'
-SECRET_KEY_PLACEHOLDER='AWS_SECRET_ACCESS_KEY: <SECRET_ACCESS_KEY_PLACEHOLDER>'
+ACCESS_KEY_PLACEHOLDER='OUR_AWS_ACCESS_KEY_ID: <ACCESS_KEY_ID_PLACEHOLDER>'
+SECRET_KEY_PLACEHOLDER='OUR_AWS_SECRET_ACCESS_KEY: <SECRET_ACCESS_KEY_PLACEHOLDER>'
 
 run_access_key_command() {
   (
     aws iam create-access-key --user-name cloud_user \
       | jq '."AccessKey" | "AccessKeyId: \(.AccessKeyId), SecretAccessKey: \(.SecretAccessKey)"' \
-      > ${HOME}/access-keys.txt
+      > ./access-keys.txt
   )
 }
 
@@ -73,12 +73,12 @@ replace_template_values() {
     exit 1
   fi
 
-  if ! grep -Eq "AWS_ACCESS_KEY_ID:[[:space:]]*<ACCESS_KEY_ID_PLACEHOLDER>" "${TEMPLATE_FILE}"; then
+  if ! grep -Eq "OUR_AWS_ACCESS_KEY_ID:[[:space:]]*<ACCESS_KEY_ID_PLACEHOLDER>" "${TEMPLATE_FILE}"; then
     echo "Error: Missing placeholder in template: ${ACCESS_KEY_PLACEHOLDER}" >&2
     exit 1
   fi
 
-  if ! grep -Eq "AWS_SECRET_ACCESS_KEY:[[:space:]]*<SECRET_ACCESS_KEY_PLACEHOLDER>" "${TEMPLATE_FILE}"; then
+  if ! grep -Eq "OUR_AWS_SECRET_ACCESS_KEY:[[:space:]]*<SECRET_ACCESS_KEY_PLACEHOLDER>" "${TEMPLATE_FILE}"; then
     echo "Error: Missing placeholder in template: ${SECRET_KEY_PLACEHOLDER}" >&2
     exit 1
   fi
@@ -92,8 +92,8 @@ replace_template_values() {
   tmp_template_file="$(mktemp "${TEMPLATE_FILE}.XXXXXX")"
 
   sed \
-    -e "s|${ACCESS_KEY_PLACEHOLDER}|AWS_ACCESS_KEY_ID: ${escaped_access_key_id}|g" \
-    -e "s|${SECRET_KEY_PLACEHOLDER}|AWS_SECRET_ACCESS_KEY: ${escaped_secret_access_key}|g" \
+    -e "s|${ACCESS_KEY_PLACEHOLDER}|OUR_AWS_ACCESS_KEY_ID: ${escaped_access_key_id}|g" \
+    -e "s|${SECRET_KEY_PLACEHOLDER}|OUR_AWS_SECRET_ACCESS_KEY: ${escaped_secret_access_key}|g" \
     "${TEMPLATE_FILE}" > "${tmp_template_file}"
 
   mv "${tmp_template_file}" "${TEMPLATE_FILE}"
@@ -109,6 +109,8 @@ main() {
 
   parse_access_keys
   replace_template_values
+  rm -f "${ACCESS_KEYS_FILE}"
+  echo "Removed access keys file: ${ACCESS_KEYS_FILE}"
   echo "Updated placeholders in: ${TEMPLATE_FILE}"
 }
 
