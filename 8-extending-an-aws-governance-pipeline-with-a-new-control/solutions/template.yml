@@ -143,7 +143,7 @@ Resources:
   HelloWorldLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
-      Runtime: python3.12
+      Runtime: python3.14
       Handler: index.lambda_handler
       Role: !GetAtt HelloWorldLambdaExecutionRole.Arn
       Timeout: 30
@@ -154,10 +154,19 @@ Resources:
           OUR_AWS_SECRET_ACCESS_KEY: <SECRET_ACCESS_KEY_PLACEHOLDER>
       Code:
         ZipFile: |
+          import os
           import json
 
           def lambda_handler(event, context):
-              print("hello world")
+              print(f"Event: {event}")
+              env_vars = {
+                  key: value for key, value in os.environ.items() if not key.startswith("AWS_")
+              }
+              if env_vars:
+                  for key in sorted(env_vars):
+                      print(f"{key}={env_vars[key]}")
+              else:
+                  print("No non-AWS environment variables found.")
               return {
                   "statusCode": 200,
                   "body": json.dumps("hello world")
