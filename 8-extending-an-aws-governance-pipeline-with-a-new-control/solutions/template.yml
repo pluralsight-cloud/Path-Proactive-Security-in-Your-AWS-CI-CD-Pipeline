@@ -143,16 +143,21 @@ Resources:
   HelloWorldLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
-      Runtime: python3.14
+      Runtime: python3.12
       Handler: index.lambda_handler
       Role: !GetAtt HelloWorldLambdaExecutionRole.Arn
       Timeout: 30
+      Environment:
+        Variables:
+          # New values for testing TruffleHog
+          OUR_AWS_ACCESS_KEY_ID: <ACCESS_KEY_ID_PLACEHOLDER>
+          OUR_AWS_SECRET_ACCESS_KEY: <SECRET_ACCESS_KEY_PLACEHOLDER>
       Code:
         ZipFile: |
           import json
 
           def lambda_handler(event, context):
-              print(f"Event: {event}")
+              print("hello world")
               return {
                   "statusCode": 200,
                   "body": json.dumps("hello world")
