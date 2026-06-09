@@ -1,0 +1,177 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: |
+  Deploys foundational resources for a governance lab including:
+  - A single-tier VPC with public subnets across two Availability Zones
+  - Route tables and Internet Gateway (no NAT Gateway; private subnets not present in this baseline)
+  - IAM role and instance profile for EC2 management
+  - Security groups and a sample EC2 web server deployed in a public subnet
+  - An S3 bucket with customer-managed KMS encryption and alias
+
+Parameters:
+  VpcName:
+    Description: The name of the VPC
+    Type: String
+    Default: GovernanceLabVpc
+
+Resources:
+  VPC:
+    Type: "AWS::EC2::VPC"
+    Properties:
+      CidrBlock: "10.0.0.0/16"
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Ref VpcName
+
+  PublicSubnet1:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      CidrBlock: "10.0.0.0/24"
+      MapPublicIpOnLaunch: true
+      VpcId:
+        Ref: "VPC"
+      Tags:
+        - Key: "Name"
+          Value: "Public Subnet AZ A"
+      AvailabilityZone:
+        Fn::Select:
+          - "0"
+          - Fn::GetAZs:
+              Ref: "AWS::Region"
+
+  PublicSubnet2:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      CidrBlock: "10.0.1.0/24"
+      MapPublicIpOnLaunch: true
+      VpcId:
+        Ref: "VPC"
+      Tags:
+        - Key: "Name"
+          Value: "Public Subnet AZ B"
+      AvailabilityZone:
+        Fn::Select:
+          - "1"
+          - Fn::GetAZs:
+              Ref: "AWS::Region"
+
+  PublicSubnet3:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      CidrBlock: "10.0.2.0/24"
+      MapPublicIpOnLaunch: true
+      VpcId:
+        Ref: "VPC"
+      Tags:
+        - Key: "Name"
+          Value: "Public Subnet AZ C"
+      AvailabilityZone:
+        Fn::Select:
+          - "2"
+          - Fn::GetAZs:
+              Ref: "AWS::Region"
+
+  RouteTablePublic:
+    Type: "AWS::EC2::RouteTable"
+    Properties:
+      VpcId:
+        Ref: "VPC"
+      Tags:
+        - Key: "Name"
+          Value: "Public Route Table"
+
+  RouteTablePublicAssociation1:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties:
+      RouteTableId:
+        Ref: "RouteTablePublic"
+      SubnetId:
+        Ref: "PublicSubnet1"
+
+  RouteTablePublicAssociation2:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties:
+      RouteTableId:
+        Ref: "RouteTablePublic"
+      SubnetId:
+        Ref: "PublicSubnet2"
+
+  RouteTablePublicAssociation3:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties:
+      RouteTableId:
+        Ref: "RouteTablePublic"
+      SubnetId:
+        Ref: "PublicSubnet3"
+
+  RouteTablePublicRoute0:
+    Type: "AWS::EC2::Route"
+    Properties:
+      DestinationCidrBlock: "0.0.0.0/0"
+      RouteTableId:
+        Ref: "RouteTablePublic"
+      GatewayId:
+        Ref: "Igw"
+
+  Igw:
+    Type: "AWS::EC2::InternetGateway"
+    Properties: {}
+
+  IGWAttachment:
+    Type: "AWS::EC2::VPCGatewayAttachment"
+    Properties:
+      VpcId:
+        Ref: "VPC"
+      InternetGatewayId:
+        Ref: "Igw"
+
+  HelloWorldLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  HelloWorldLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.14
+      Handler: index.lambda_handler
+      Role: !GetAtt HelloWorldLambdaExecutionRole.Arn
+      Timeout: 30
+      Environment:
+        Variables:
+          # New values for testing TruffleHog
+          OUR_AWS_ACCESS_KEY_ID: <ACCESS_KEY_ID_PLACEHOLDER>
+          OUR_AWS_SECRET_ACCESS_KEY: <SECRET_ACCESS_KEY_PLACEHOLDER>
+      Code:
+        ZipFile: |
+          import os
+          import json
+
+          def lambda_handler(event, context):
+              print(f"Event: {event}")
+              env_vars = {
+                  key: value for key, value in os.environ.items() if not key.startswith("AWS_")
+              }
+              if env_vars:
+                  for key in sorted(env_vars):
+                      print(f"{key}={env_vars[key]}")
+              else:
+                  print("No non-AWS environment variables found.")
+              return {
+                  "statusCode": 200,
+                  "body": json.dumps("hello world")
+              }
+
+Outputs: {}
+Metadata: {}
+Conditions: {}

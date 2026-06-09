@@ -301,3 +301,6 @@ tmbootpicker.efi
 
 # Any artifact builds
 *.zip
+
+# GH
+.gh_config/

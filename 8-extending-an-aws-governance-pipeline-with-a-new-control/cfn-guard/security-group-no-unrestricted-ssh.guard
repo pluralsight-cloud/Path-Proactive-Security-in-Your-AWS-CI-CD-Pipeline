@@ -1,0 +1,63 @@
+# Rule Identifier:
+#    INCOMING_SSH_DISABLED
+#
+# Description:
+#    Checks if the incoming SSH traffic (port 22) for security groups is open to the world.
+#
+# Reports on:
+#    [AWS::EC2::SecurityGroup, AWS::EC2::SecurityGroupIngress]
+#
+# Evaluates:
+#    AWS CloudFormation
+#
+# Rule Parameters:
+#    NA
+#
+# Scenarios:
+# a) SKIP: when no Security Group or Security Group Ingress resources are present
+# b) SKIP: when no SSH ingress is defined (port 22)
+# c) PASS: when all SSH ingress rules restrict the IP address of the incoming SSH traffic
+# d) FAIL: when any SSH ingress rule allows traffic from any IP address (0.0.0.0/0 or ::/0)
+# e) SKIP: when metadata includes the suppression for rule INCOMING_SSH_DISABLED
+
+#
+# Select all Security Group and Security Group Ingress resources from incoming template (payload)
+#
+let aws_security_groups_restricted_ssh_sg_resources = Resources.*[ Type == 'AWS::EC2::SecurityGroup'
+  Metadata.guard.SuppressedRules not exists or
+  Metadata.guard.SuppressedRules.* != "INCOMING_SSH_DISABLED"
+]
+
+let aws_security_groups_restricted_ssh_sgi_resources = Resources.*[ Type == 'AWS::EC2::SecurityGroupIngress'
+  Metadata.guard.SuppressedRules not exists or
+  Metadata.guard.SuppressedRules.* != "INCOMING_SSH_DISABLED"
+]
+
+rule UNRESTRICTED_INCOMING_SSH_DISABLED when %aws_security_groups_restricted_ssh_sg_resources !empty OR %aws_security_groups_restricted_ssh_sgi_resources !empty {
+  let violations_sg = %aws_security_groups_restricted_ssh_sg_resources[
+    Type == 'AWS::EC2::SecurityGroup'
+    Properties.SecurityGroupIngress exists
+    some Properties.SecurityGroupIngress[*] {
+      FromPort == 22
+      ToPort == 22
+      IpProtocol == "tcp"
+      CidrIp == '0.0.0.0/0' OR
+      CidrIpv6 == '::/0'
+    }
+  ]
+
+  let violations_sgi = %aws_security_groups_restricted_ssh_sgi_resources[
+    Type == 'AWS::EC2::SecurityGroupIngress'
+    Properties.FromPort == 22
+    Properties.ToPort == 22
+    Properties.IpProtocol == "tcp"
+    Properties.CidrIp == '0.0.0.0/0' OR
+    Properties.CidrIpv6 == '::/0'
+  ]
+
+  %violations_sg empty
+  <<Security Group Ingress rules must not allow unrestricted SSH access (port 22) from 0.0.0.0/0 or ::/0. Please specify a more specific CIDR.>>
+
+  %violations_sgi empty
+  <<Security Group Ingress rules must not allow unrestricted SSH access (port 22) from 0.0.0.0/0 or ::/0. Please specify a more specific CIDR.>>
+}
