@@ -147,6 +147,10 @@ Resources:
       Handler: index.lambda_handler
       Role: !GetAtt HelloWorldLambdaExecutionRole.Arn
       Timeout: 30
+      Environment:
+        Variables:
+          OUR_AWS_ACCESS_KEY_ID: ACCESS_KEY_ID_PLACEHOLDER
+          OUR_AWS_SECRET_ACCESS_KEY: SECRET_ACCESS_KEY_PLACEHOLDER
       Code:
         ZipFile: |
           import os

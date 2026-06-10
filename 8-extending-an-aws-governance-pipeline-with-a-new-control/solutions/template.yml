@@ -150,8 +150,9 @@ Resources:
       Environment:
         Variables:
           # New values for testing TruffleHog
-          OUR_AWS_ACCESS_KEY_ID: <ACCESS_KEY_ID_PLACEHOLDER>
-          OUR_AWS_SECRET_ACCESS_KEY: <SECRET_ACCESS_KEY_PLACEHOLDER>
+          # Add your hardcoded values here
+          OUR_AWS_ACCESS_KEY_ID: ACCESS_KEY_ID_PLACEHOLDER
+          OUR_AWS_SECRET_ACCESS_KEY: SECRET_ACCESS_KEY_PLACEHOLDER
       Code:
         ZipFile: |
           import os
