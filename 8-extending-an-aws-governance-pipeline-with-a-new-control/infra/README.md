@@ -1,6 +1,6 @@
 # Infrastructure Directory
 
-This directory contains the lab 7 CloudFormation template used to trigger governance findings.
+This directory contains the lab 8 CloudFormation template used to deploy the core infrastructure and Lambda resources.
 
 ## File Structure
 
@@ -11,4 +11,5 @@ infra/
 
 ## File Summaries
 
-- `template.yml`: CloudFormation stack with network, IAM, EC2, S3, and KMS resources used in the risky deployment scenario evaluated by Guard rules.
+- `template.yml`: CloudFormation stack that deploys baseline networking resources plus a sample inline Python Lambda and execution role used in this lab's governance and secret-scanning workflow.
+
