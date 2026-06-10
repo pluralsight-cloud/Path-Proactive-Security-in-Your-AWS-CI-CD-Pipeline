@@ -149,10 +149,19 @@ Resources:
       Timeout: 30
       Code:
         ZipFile: |
+          import os
           import json
 
           def lambda_handler(event, context):
               print(f"Event: {event}")
+              env_vars = {
+                  key: value for key, value in os.environ.items() if not key.startswith("AWS_")
+              }
+              if env_vars:
+                  for key in sorted(env_vars):
+                      print(f"{key}={env_vars[key]}")
+              else:
+                  print("No non-AWS environment variables found.")
               return {
                   "statusCode": 200,
                   "body": json.dumps("hello world")
